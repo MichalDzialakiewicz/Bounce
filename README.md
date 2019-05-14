@@ -8,3 +8,7 @@ Bounce to gra zręcznościowa polegająca na poruszaniu się kulą w taki sposó
 - kolczaste słupki stanowiące przeszkodę odbierającą jeden punkt życia kuli,
 - bonusowe punkty, których zebranie jest opcjonalne,
 - dodatkowe punkty życia kuli.
+
+**Klasy i ich funkcjonalność**
+
+- Klasa cKula \-\ możliwość poruszania kulą w lewo i prawo oraz wykonywania skoku z zastosowaniem grawitacji.

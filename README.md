@@ -1,1 +1,3 @@
 # Bounce
+
+**Opis gry**

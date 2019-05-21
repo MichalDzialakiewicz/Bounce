@@ -10,6 +10,12 @@ Bounce to gra zręcznościowa polegająca na poruszaniu się kulą w taki sposó
 - bonusowe punkty, których zebranie jest opcjonalne,
 - dodatkowe punkty życia kuli.
 
+Sterowanie:
+- W - skok,
+- A - ruch w lewo,
+- D - ruch w prawo.
+
+
 **Klasy i ich funkcjonalność**
 
 Do wykonania gry potrzebne będą klasy:
@@ -21,3 +27,7 @@ Do wykonania gry potrzebne będą klasy:
 - **cZycie** \- obiekt zwiększający punkty życia kuli o jeden.
 - **cScena** \- wyświetlanie planszy i ustalenie zasad gry.
 - **cFizyka** \- symulacja grawitacji podczas skakanią kulą.
+
+**Szkic planszy**
+
+![Bez tytułu](https://user-images.githubusercontent.com/50639678/58133678-b347ba00-7c24-11e9-9d7f-982cac3641ba.png)

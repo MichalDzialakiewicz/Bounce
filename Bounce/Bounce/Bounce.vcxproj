@@ -89,10 +89,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>C:\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,6 +154,18 @@
     <ClInclude Include="cSciana.h" />
     <ClInclude Include="cSlupek.h" />
     <ClInclude Include="cZycie.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cBonus.cpp" />
+    <ClCompile Include="cFigura.cpp" />
+    <ClCompile Include="cFizyka.cpp" />
+    <ClCompile Include="cKula.cpp" />
+    <ClCompile Include="cObrecz.cpp" />
+    <ClCompile Include="cScena.cpp" />
+    <ClCompile Include="cSciana.cpp" />
+    <ClCompile Include="cSlupek.cpp" />
+    <ClCompile Include="cZycie.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

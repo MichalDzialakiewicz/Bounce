@@ -4,6 +4,6 @@
 class cZycie : public cFigura {
 	double r_;
 public:
-	cZycie(double r);
+	cZycie(double x, double y, double r);
 	void rysuj();
 };

@@ -28,7 +28,7 @@ protected:
 	float g_;
 	float alfa_g_;
 public:
-	cFizyka(float x = 0, float y = 0);
+	cFizyka(double x, double y);
 	float x() { return float(x_); }
 	float y() { return float(y_); }
 	void ustaw_x(float _x) { x_ = (int)_x; }

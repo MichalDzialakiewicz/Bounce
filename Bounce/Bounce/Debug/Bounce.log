@@ -1,1 +1,4 @@
-﻿
+﻿  cScena.cpp
+c:\users\michał\documents\github\bounce\bounce\bounce\cfizyka.h(34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\michał\documents\github\bounce\bounce\bounce\cfizyka.h(35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Bounce.vcxproj -> C:\Users\Michał\Documents\GitHub\Bounce\Bounce\Debug\Bounce.exe

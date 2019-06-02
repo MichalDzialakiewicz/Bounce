@@ -4,6 +4,6 @@
 class cSlupek : public cFigura {
 	double a_, b_;
 public:
-	cSlupek(double a, double b);
+	cSlupek(double x, double y, double a, double b);
 	void rysuj();
 };

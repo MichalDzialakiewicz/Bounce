@@ -4,6 +4,6 @@
 class cBonus : public cFigura {
 	double a_, b_;
 public:
-	cBonus(double a, double b);
+	cBonus(double x, double y, double a, double b);
 	void rysuj();
 };

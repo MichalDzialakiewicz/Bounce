@@ -9,7 +9,7 @@ unsigned long long GetTickCount()
     return duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
 }
 #endif
-#include <math.h>
+#include "cPole.h"
 
 cFizyka::cFizyka(double x, double y): x_(x),y_(y) {
     //obiekt staly
@@ -18,10 +18,10 @@ cFizyka::cFizyka(double x, double y): x_(x),y_(y) {
     v_=0.0;
     alfa_v_=0.0;
     //ustawia domyslna obwiednie obiektu
-    granica_.xa=-1.0;
-    granica_.ya=-1.0;
-    granica_.xb=1.0;
-    granica_.yb=1.0;
+    granica_.xa=-0.3125;
+    granica_.ya=-0.3125;
+    granica_.xb= 0.3125;
+    granica_.yb= 0.3125;
     reset();
 }
 
@@ -80,7 +80,8 @@ int cFizyka::kolizja(cFizyka &X) //wykrywanie kolizji z innym obiektem (funkcja 
     //jesli wystepuje kolizja to przynajmniej jeden z wierzcholkow musi zawierac sie wewnatrz
     //sprawdzenie czy ktorys z wierzcholkow obiektu nie zawiera sie w obiekcie sprawdzanym
     int kolizja=0;
-    if(w_prosokacie(x_ + granica_.xa, y_ + granica_.ya, X) == 1 ) kolizja = 1;
+	if (&X == 0) return 0;
+    else if(w_prosokacie(x_ + granica_.xa, y_ + granica_.ya, X) == 1 ) kolizja = 1;
     else if(w_prosokacie(x_ + granica_.xa, y_ + granica_.yb, X) == 1 ) kolizja = 1;
     else if(w_prosokacie(x_ + granica_.xb, y_ + granica_.yb, X) == 1 ) kolizja = 1;
     else if(w_prosokacie(x_ + granica_.xb, y_ + granica_.ya, X) == 1 ) kolizja = 1;
@@ -104,7 +105,8 @@ int cFizyka::kolizja(cFizyka &X) //wykrywanie kolizji z innym obiektem (funkcja 
 
 int cFizyka::w_prosokacie(float _x, float _y, const cFizyka &X) //wykrywa czy dany punkt (_x,_y) znajduje sie wewnatrz pewnego kwadratu
 {
-    if( ( (_x < X.x_+X.granica_.xb) && (_x > X.x_+X.granica_.xa)) && ((_y < X.y_+X.granica_.yb) && (_y > X.y_+X.granica_.ya)))
+	if (&X == 0) return 0;
+    else if( ( (_x < X.x_+X.granica_.xb) && (_x > X.x_+X.granica_.xa)) && ((_y < X.y_+X.granica_.yb) && (_y > X.y_+X.granica_.ya)))
         return 1;
     else return 0;
 }

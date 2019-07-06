@@ -1,7 +1,7 @@
 #include "cKula.h"
 
 cKula::cKula(double x, double y, double r, int hp) : cFigura(x, y), r_(r), hp_(hp) {
-	ustaw_geometria(x, y, -0.25, -0.25, 0.25, 0.25);
+	ustaw_geometria(x, y, -0.3125, -0.3125, 0.3125, 0.3125);
 }
 
 void cKula::rysuj() {
@@ -12,7 +12,7 @@ void cKula::rysuj() {
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
 
-	glColor3d(1, 0, 0); //do ustawienia
+	glColor3d(0.8, 0, 0); //do ustawienia
 
 	glBegin(GL_POLYGON); //do ustawienia
 	{
@@ -36,15 +36,4 @@ void cKula::ruch(double dv, double dalfa_v) {
 	else {
 		this->ustaw_predkosc(dv, dalfa_v);
 	}
-}
-
-void cKula::powrot(double dy) {
-	y_ += dy;
-}
-
-double cKula::get_y() const {
-	return y_;
-}
-void cKula::set_y(double y) {
-	y_ = y;
 }

@@ -12,7 +12,7 @@ void cSciana::rysuj() {
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
 
-	glColor3d(0, 0, 0); //do ustawienia
+	glColor3d(1, 0, 0); //do ustawienia
 
 	glBegin(GL_POLYGON); //do ustawienia
 	{

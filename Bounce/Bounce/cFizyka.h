@@ -9,6 +9,10 @@ unsigned long long GetTickCount();
 #endif
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <math.h>
+#include <iostream>
+#include <vector>
+#include <fstream>
 
 typedef struct sGranica {
 	float xa;

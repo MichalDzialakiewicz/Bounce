@@ -4,9 +4,6 @@ cScena scena;
 void resize_binding(int width, int height) {
 	scena.resize(width, height);
 }
-void idle_binding() {
-	//scena.idle();
-}
 void display_binding() {
 	scena.display();
 }

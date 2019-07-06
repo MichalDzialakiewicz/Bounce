@@ -5,4 +5,7 @@ class cFigura : public cFizyka {
 public:
 	cFigura(double x, double y);
 	virtual void rysuj() = 0;
+	double get_x() const;
+	double get_y() const;
+	void set_y(double y);
 };

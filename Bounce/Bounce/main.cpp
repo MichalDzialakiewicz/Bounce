@@ -1,6 +1,7 @@
 #include "cScena.h"
 cScena scena;
 
+// bindingi do callbackow
 void resize_binding(int width, int height) {
 	scena.resize(width, height);
 }

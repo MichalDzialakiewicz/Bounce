@@ -1,11 +1,11 @@
 #pragma once
+#include "stdlib.h"
 #include "cKula.h"
 #include "cSciana.h"
 #include "cObrecz.h"
 #include "cSlupek.h"
 #include "cBonus.h"
 #include "cZycie.h"
-#include "cPole.h"
 
 void resize_binding(int width, int height);
 void display_binding();
@@ -14,17 +14,17 @@ void timer_binding(int i);
 
 class cScena {
 	cKula* kula;
+	std::pair<double, double> spawn;
 	std::vector<std::vector<cFigura*>> plansza;
-	std::vector<cFigura*> figury;
 public:
 	cScena();
+	void init(int argc, char **argv, const char* window_name);
 	void resize(int width, int height);
 	void display();
-	void timer();
-	void init(int argc, char **argv, const char* window_name);
 	void set_callbacks();
+	void timer();
 	void key(unsigned char key, int x, int y);
 	void wczytaj_plansze(std::string nazwa);
-	double znajdz_poziom();
+	double znajdz_podloge();
 	~cScena();
 };

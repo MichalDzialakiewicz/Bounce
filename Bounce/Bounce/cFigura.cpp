@@ -8,6 +8,9 @@ double cFigura::get_x() const {
 	return x_;
 }
 
+void cFigura::set_x(double x) {
+	x_ = x;
+}
 double cFigura::get_y() const {
 	return y_;
 }

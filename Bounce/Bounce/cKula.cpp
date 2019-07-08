@@ -1,17 +1,29 @@
 #include "cKula.h"
 
 cKula::cKula(double x, double y, double r, int hp) : cFigura(x, y), r_(r), hp_(hp) {
-	ustaw_geometria(x, y, -r, -r, r, r);
+	obwiednia(x, y, -r, -r, r, r);
 }
 
-void cKula::rysuj() {
+void cKula::rysuj()
+{
 	glPushMatrix();
 	glTranslated(x_, y_, 0);
 	glRotated(0, 1, 0, 0);
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
-	glColor3d(0.7, 0, 0); // kolor do ustawienia!
-	glBegin(GL_POLYGON);
+	if (hp_ == 4) {
+		glColor3d(1, 0, 0); // kolor do ustawienia!
+	}
+	else if (hp_ == 3) {
+		glColor3d(0.8, 0, 0); // kolor do ustawienia!
+	}
+	else if (hp_ == 2) {
+		glColor3d(0.6, 0, 0); // kolor do ustawienia!
+	}
+	else if (hp_ == 1) {
+		glColor3d(0.4, 0, 0); // kolor do ustawienia!
+	}
+ 	glBegin(GL_POLYGON);
 	{
 		float precyzja = 0.0005;
 		for (float kat = 0; kat <= 2 * M_PI; kat += precyzja) {
@@ -26,11 +38,11 @@ void cKula::rysuj() {
 
 void cKula::ruch(double dv, double dalfa_v) { 
 	if (dalfa_v == 90) {
-		this->ustaw_predkosc(dv, dalfa_v);
-		this->ustaw_fizyka(9.81*1E-6, -90); // grawitacja do ustawienia!
+		this->predkosc(dv, dalfa_v);
+		this->grawitacja(8.81*1E-6, -90); // grawitacja do ustawienia!
 	}
 	else {
-		this->ustaw_predkosc(dv, dalfa_v);
+		this->predkosc(dv, dalfa_v);
 	}
 }
 
@@ -40,4 +52,11 @@ int cKula::get_hp() const {
 
 void cKula::set_hp(int hp) {
 	hp_ = hp;
+}
+
+double cKula::get_v() const {
+	return v_;
+}
+double cKula::get_g() const {
+	return g_;
 }

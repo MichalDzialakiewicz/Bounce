@@ -145,25 +145,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="cBonus.h" />
+    <ClInclude Include="cCheckpoint.h" />
     <ClInclude Include="cFigura.h" />
     <ClInclude Include="cFizyka.h" />
+    <ClInclude Include="cFloor.h" />
     <ClInclude Include="cKula.h" />
     <ClInclude Include="cObrecz.h" />
     <ClInclude Include="cScena.h" />
     <ClInclude Include="cSciana.h" />
-    <ClInclude Include="cSlupek.h" />
+    <ClInclude Include="cPrzeszkoda.h" />
+    <ClInclude Include="cWyjscie.h" />
     <ClInclude Include="cZycie.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cBonus.cpp" />
+    <ClCompile Include="cCheckpoint.cpp" />
     <ClCompile Include="cFigura.cpp" />
     <ClCompile Include="cFizyka.cpp" />
+    <ClCompile Include="cFloor.cpp" />
     <ClCompile Include="cKula.cpp" />
     <ClCompile Include="cObrecz.cpp" />
     <ClCompile Include="cScena.cpp" />
     <ClCompile Include="cSciana.cpp" />
-    <ClCompile Include="cSlupek.cpp" />
+    <ClCompile Include="cPrzeszkoda.cpp" />
+    <ClCompile Include="cWyjscie.cpp" />
     <ClCompile Include="cZycie.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

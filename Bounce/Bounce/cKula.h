@@ -10,4 +10,6 @@ public:
 	void ruch(double dv, double dalfa_v);
 	int get_hp() const;
 	void set_hp(int hp);
+	double get_v() const;
+	double get_g() const;
 };

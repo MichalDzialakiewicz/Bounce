@@ -2,8 +2,9 @@
 
 cScena::cScena() // konstruktor
 {
-	kula = new cKula(2.5, 2.5, 0.5, 1);
-	spawn = { 2.5,2.5 }; // punkt kontrolny
+	kula = new cKula(2.5, 2.5, 0.5, 3);
+	checkpoint = { 2.5,2.5 }; // punkt kontrolny
+	l_obreczy = 0; // liczba zaliczonych obreczy
 	wczytaj_plansze("plansza.txt");
 }
 
@@ -71,15 +72,16 @@ void cScena::set_callbacks() { // callbacki
 	glutKeyboardFunc(key_binding);
 }
 
-void cScena::timer() // wykrywanie kolizji
+void cScena::timer()
 {
-	int j = -1;
+	// wykrywanie kolizji
+	int i = -1;
 	for (std::vector<std::vector<cFigura*>>::iterator itr1 = plansza.begin(); itr1 != plansza.end(); itr1++) {
-		j++;
+		i++;
 		std::vector<cFigura*> kolumna = *itr1;
-		int i = -1;
+		int j = -1;
 		for (std::vector<cFigura*>::iterator itr2 = kolumna.begin(); itr2 != kolumna.end(); itr2++) {
-			i++;
+			j++;
 			cFigura* tmp = *itr2;
 			if (tmp == 0) {
 				continue;
@@ -87,15 +89,22 @@ void cScena::timer() // wykrywanie kolizji
 			if (kula->kolizja(*tmp)) {
 				cSciana* s = dynamic_cast<cSciana*>(tmp); // kolizja ze sciana
 				if (s) {
-
+					break;
 				}
-				cSlupek* p = dynamic_cast<cSlupek*>(tmp); // // kolizja ze slupkiem
+				cFloor* f = dynamic_cast<cFloor*>(tmp); // kolizja z podloga
+				if (f) {
+					kula->ruch(0, 0);
+					kula->grawitacja(0, 0);
+					kula->set_y(znajdz_podloge());
+					break;
+				}
+				cPrzeszkoda* p = dynamic_cast<cPrzeszkoda*>(tmp); // kolizja z przeszkoda
 				if (p) { 
 					kula->set_hp(kula->get_hp() - 1);
-					kula->set_x(spawn.first);
-					kula->set_y(spawn.second);
+					kula->set_x(checkpoint.first);
+					kula->set_y(checkpoint.second);
 					kula->ruch(0, 0);
-					kula->ustaw_fizyka(0, 0);
+					kula->grawitacja(0, 0);
 					if (kula->get_hp() == 0) {
 						std::cout << "Straciles wszystkie punkty zycia. Koniec gry." << std::endl;
 						Sleep(5000);
@@ -104,17 +113,56 @@ void cScena::timer() // wykrywanie kolizji
 					else {
 						std::cout << "Pozostale punkty zycia: " << kula->get_hp() << std::endl;
 					}
+					break;
+				}
+				cObrecz* o = dynamic_cast<cObrecz*>(tmp); // kolizja z obrecza
+				if (o) {
+					if (o->get_aktywnosc() == 1) {
+						o->set_aktywnosc(0);
+						l_obreczy++;
+						std::cout << "Zaliczone obrecze: " << l_obreczy << std::endl;
+					}
+					break;
+				}
+				cCheckpoint* c = dynamic_cast<cCheckpoint*>(tmp); // kolizja z punktem kontrolnym
+				if (c) {
+					if (c->get_aktywnosc() == 0) {
+						c->set_aktywnosc(1);
+						checkpoint.first = c->get_x();
+						checkpoint.second = znajdz_podloge();
+						std::cout << "Punkt kontrolny odblkowany." << std::endl;
+					}
+					break;
 				}
 				cZycie* z = dynamic_cast<cZycie*>(tmp); // kolizja z punktem zycia
 				if (z) {
 					kula->set_hp(kula->get_hp()+1);
-					delete kolumna[i];
-					plansza[j][i] = 0;
+					delete kolumna[j];
+					plansza[i][j] = 0;
 					std::cout << "Zdobywasz punkt zycia, masz ich teraz: " << kula->get_hp() << std::endl;
+					break;
+				}
+				cWyjscie* w = dynamic_cast<cWyjscie*>(tmp); // kolizja z wyjsciem
+				if (w) {
+					if (l_obreczy == 6) {
+						kula->ruch(0, 0);
+						kula->grawitacja(0, 0);
+						std::cout << "Gratulacje, przeszedles gre." << std::endl;
+						Sleep(5000);
+						exit(0);
+					}
+					else {
+						std::cout << "Nie zaliczyles wszystkich obreczy." << std::endl;
+					}
+					break;
 				}
 			}
 			
 		}
+	}
+	// wykrywanie podloza pod kula
+	if (kula->get_g() == 0 && kula->get_y() != znajdz_podloge()) { // sprawdzenie kiedy kula nie ma przyspieszenia i nie jest na najnizszym mozliwym podlozu
+		kula->grawitacja(8.81*1E-6, -90); // upadek na podloze
 	}
 	kula->aktualizuj(GetTickCount());
     glutPostRedisplay();
@@ -125,31 +173,71 @@ void cScena::key(unsigned char key, int x, int y) { // sterowanie
 	switch (key) {
 	case 'w': // skok
 	{
-		kula->ruch(0.005, 90); // predkosc do ustawienia!
+		if (kula->get_g() == 0) { // zablokowanie wielokrotnego skoku
+			kula->ruch(0.009, 90); // predkosc do ustawienia!
+		}
 		break;
 	}
 	case 'a': // ruch w lewo
 	{
-		kula->ruch(0.002, 180); // predkosc do ustawienia!
-
+		if (kula->get_g() == 0) { // ruch na podloze
+			kula->ruch(0.002, 180); // predkosc do ustawienia!
+		}
+		else { // ruch w trakcie skoku
+			kula->ruch(0.004, 180); // predkosc do ustawienia!
+		}
 		break;
 	}
 	case 'd': // ruch w prawo
 	{
-		kula->ruch(0.002, 0); // predkosc do ustawienia!
+		if (kula->get_g() == 0) { // ruch na podlodze
+			kula->ruch(0.002, 0); // predkosc do ustawienia!
+		}
+		else { // ruch w trakcie skoku
+			kula->ruch(0.004, 0); // predkosc do ustawienia!
+		}
 		break;
 	}
-	case 's': // przywrocenie kuli do poziomu podlogi
+	case 's': // awaryjne przywrocenie kuli do poziomu podlogi
 	{
 		kula->set_y(znajdz_podloge());
 		kula->ruch(0, 0);
-		kula->ustaw_fizyka(0, 0);
+		kula->grawitacja(0, 0);
 		break;
 	}
 	case 'r': // zresetowanie rozgrywki
 	{
-		wczytaj_plansze("plansza.txt");
 		kula = new cKula(2.5, 2.5, 0.5, 3);
+		checkpoint.first = 2.5;
+		checkpoint.second = 2.5;
+		l_obreczy = 0;
+		wczytaj_plansze("plansza.txt");
+		// przywrocenie zaliczonych obreczy i punktow kontrolnych do stanu bazowego
+		for (std::vector<std::vector<cFigura*>>::iterator itr1 = plansza.begin(); itr1 != plansza.end(); itr1++) {
+			std::vector<cFigura*> kolumna = *itr1;
+			for (std::vector<cFigura*>::iterator itr2 = kolumna.begin(); itr2 != kolumna.end(); itr2++) {
+				cFigura* tmp = *itr2;
+				if (tmp == 0) {
+					continue;
+				}
+				cCheckpoint* c = dynamic_cast<cCheckpoint*>(tmp);
+				if (c) {
+					c->set_aktywnosc(0);
+				}
+				cObrecz* o = dynamic_cast<cObrecz*>(tmp);
+				if (o) {
+					o->set_aktywnosc(1);
+				}
+			}
+		}
+		break;
+	}
+	case 'b': // powrot do punktu kontrolnego
+	{
+		kula->set_x(checkpoint.first);
+		kula->set_y(checkpoint.second);
+		kula->ruch(0, 0);
+		kula->grawitacja(0, 0);
 		break;
 	}
 	}
@@ -175,11 +263,28 @@ void cScena::wczytaj_plansze(std::string nazwa) // wczytywanie planszy z pliku .
 				if (tmp == 's') { // wczytuje sciane
 					kolumna.push_back(new cSciana(xp, yp, 1, 1));
 				}
-				else if (tmp == 'p') { // wczytuje slupek
-					kolumna.push_back(new cSlupek(xp, yp, 0.4, 1));
+				else if (tmp == 'f') { // wczytuje podloge
+					kolumna.push_back(new cFloor(xp, yp, 1, 1));
+				}
+				else if (tmp == 'p') { // wczytuje przeszkode
+					kolumna.push_back(new cPrzeszkoda(xp, yp-0.5, 0.4, 0.9));
+				}
+				else if (tmp == 'o') { // wczytuje obrecz
+					if (xp == 97.5 || xp == 101.5) { // pozioma
+						kolumna.push_back(new cObrecz(xp+0.5, yp, 2, 0.4, 1));
+					}
+					else { // pionowa
+						kolumna.push_back(new cObrecz(xp, yp-0.5, 0.4, 2, 1));
+					}
+				}
+				else if (tmp == 'c') { // wczytuje punkt kontrolny
+					kolumna.push_back(new cCheckpoint(xp, yp, 1, 1, 0));
 				}
 				else if (tmp == 'z') { // wczytuje punkt zycia
 					kolumna.push_back(new cZycie(xp, yp, 0.4));
+				}
+				else if (tmp == 'w') { // wczytuje wyjscie
+					kolumna.push_back(new cWyjscie(xp, yp, 1, 1));
 				}
 				else {
 					kolumna.push_back(0);
@@ -200,8 +305,8 @@ double cScena::znajdz_podloge() { // metoda wywolywana klawiszem 's' - przywroce
 			if (tmp1 == 0) {
 				continue;
 			}
-			double xf1 = tmp1->get_x(); // wspolrzedna x pierwszej figury kolumny
-			if (xk > xf1 - 0.5 && xk < xf1 + 0.5) { // sprawdzenie zawartosci x kuli w kolumnie
+			double xf = tmp1->get_x(); // wspolrzedna x pierwszej figury kolumny
+			if (xk > xf - 0.5 && xk < xf + 0.5) { // sprawdzenie zawartosci x kuli w kolumnie
 				double lowest_y = 9.5;
 				for (std::vector<cFigura*>::iterator itr3 = kolumna.begin(); itr3 != kolumna.end(); itr3++) { // znalezienie najnizszego poziomu podlogi
 					cFigura* tmp2 = *itr3;
@@ -209,9 +314,9 @@ double cScena::znajdz_podloge() { // metoda wywolywana klawiszem 's' - przywroce
 						continue;
 					}
 					double yf = tmp2->get_y(); // wspolrzedna y figury
-					cSciana* s = dynamic_cast<cSciana*>(tmp2);
-					if (s) {
-						if (yf<lowest_y && (*(itr3-1))==0) { //znalezienie podlogi
+					cFloor* f = dynamic_cast<cFloor*>(tmp2);
+					if (f) { //znalezienie podlogi
+						if (yf<lowest_y && (*(itr3-1))==0) {
 							lowest_y = yf+1;
 							break;
 						}

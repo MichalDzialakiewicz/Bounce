@@ -27,12 +27,6 @@
     <ClInclude Include="cObrecz.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="cSlupek.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cBonus.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="cZycie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -42,18 +36,24 @@
     <ClInclude Include="cFizyka.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="cPrzeszkoda.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cCheckpoint.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cWyjscie.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cFloor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cFigura.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cFizyka.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cBonus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cSlupek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cSciana.cpp">
@@ -72,6 +72,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cPrzeszkoda.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cCheckpoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cWyjscie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cFloor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

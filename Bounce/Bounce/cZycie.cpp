@@ -1,7 +1,7 @@
 #include "cZycie.h"
 
 cZycie::cZycie(double x, double y, double r) : cFigura(x, y), r_(r) {
-	ustaw_geometria(x, y, -r, -r, r, r);
+	obwiednia(x, y, -r, -r, r, r);
 }
 
 void cZycie::rysuj() {

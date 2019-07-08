@@ -1,7 +1,7 @@
 #include "cSciana.h"
 
 cSciana::cSciana(double x, double y, double a, double b) : cFigura(x, y), a_(a), b_(b) {
-	ustaw_geometria(x, y, -a/2, -b/2, a/2, b/2);
+	obwiednia(x, y, -a_/2.5, -b_/2.5, a_/2.5, b_/2.5);
 }
 
 void cSciana::rysuj() {

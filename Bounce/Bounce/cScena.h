@@ -1,11 +1,12 @@
 #pragma once
-#include "stdlib.h"
 #include "cKula.h"
 #include "cSciana.h"
+#include "cFloor.h"
+#include "cPrzeszkoda.h"
 #include "cObrecz.h"
-#include "cSlupek.h"
-#include "cBonus.h"
+#include "cCheckpoint.h"
 #include "cZycie.h"
+#include "cWyjscie.h"
 
 void resize_binding(int width, int height);
 void display_binding();
@@ -14,7 +15,8 @@ void timer_binding(int i);
 
 class cScena {
 	cKula* kula;
-	std::pair<double, double> spawn;
+	std::pair<double, double> checkpoint;
+	int l_obreczy;
 	std::vector<std::vector<cFigura*>> plansza;
 public:
 	cScena();

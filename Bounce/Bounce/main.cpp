@@ -17,6 +17,7 @@ void timer_binding(int i) {
 
 int main(int argc, char *argv[])
 {
+	scena.zasady();
 	scena.init(argc, argv, "Okno sceny");
 	return 0;
 }

@@ -1,4 +1,6 @@
-﻿  cScena.cpp
-c:\users\michał\documents\github\bounce\bounce\bounce\cscena.cpp(165): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\michał\documents\github\bounce\bounce\bounce\cscena.cpp(338): warning C4715: 'cScena::znajdz_podloge': not all control paths return a value
+﻿  cZycie.cpp
+c:\users\michał\documents\github\bounce\bounce\bounce\czycie.cpp(4): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\michał\documents\github\bounce\bounce\bounce\czycie.cpp(16): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\michał\documents\github\bounce\bounce\bounce\czycie.cpp(18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michał\documents\github\bounce\bounce\bounce\czycie.cpp(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Bounce.vcxproj -> C:\Users\Michał\Documents\GitHub\Bounce\Bounce\Debug\Bounce.exe

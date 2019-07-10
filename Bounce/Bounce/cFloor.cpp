@@ -10,7 +10,7 @@ void cFloor::rysuj() {
 	glRotated(0, 1, 0, 0);
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
-	glColor3d(0.9, 0, 0); // kolor do ustawienia!
+	glColor3d(1, 0, 0.2);
 	glBegin(GL_POLYGON);
 	{
 		glVertex3d(-a_ / 2, b_ / 2, 0);

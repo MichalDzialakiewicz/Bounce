@@ -28,5 +28,6 @@ public:
 	void key(unsigned char key, int x, int y);
 	void wczytaj_plansze(std::string nazwa);
 	double znajdz_podloge();
+	void zasady();
 	~cScena();
 };

@@ -11,7 +11,7 @@ void cCheckpoint::rysuj() {
 		glRotated(0, 1, 0, 0);
 		glRotated(0, 0, 1, 0);
 		glRotated(0, 0, 0, 1);
-		glColor3d(0, 1, 0); // kolor do ustawienia!
+		glColor3d(0, 1, 0);
 		glBegin(GL_POLYGON);
 		{
 			glVertex3d(0, b_ / 3, 0);
@@ -28,7 +28,7 @@ void cCheckpoint::rysuj() {
 	glRotated(0, 1, 0, 0);
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
-	glColor3d(1, 1, 0); // kolor do ustawienia!
+	glColor3d(1, 1, 0);
 	glBegin(GL_POLYGON);
 	{
 		glVertex3d(0, b_ / 2, 0);

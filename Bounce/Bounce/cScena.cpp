@@ -2,7 +2,7 @@
 
 cScena::cScena() // konstruktor
 {
-	kula = new cKula(2.5, 2.5, 0.5, 3);
+	kula = new cKula(2.5, 5.5, 0.5, 3);
 	checkpoint = { 2.5,2.5 }; // punkt kontrolny
 	l_obreczy = 0; // liczba zaliczonych obreczy
 	wczytaj_plansze("plansza.txt");
@@ -129,7 +129,7 @@ void cScena::timer()
 					if (c->get_aktywnosc() == 0) {
 						c->set_aktywnosc(1);
 						checkpoint.first = c->get_x();
-						checkpoint.second = znajdz_podloge();
+						checkpoint.second = c->get_y();
 						std::cout << "Punkt kontrolny odblkowany." << std::endl;
 					}
 					break;
@@ -144,7 +144,7 @@ void cScena::timer()
 				}
 				cWyjscie* w = dynamic_cast<cWyjscie*>(tmp); // kolizja z wyjsciem
 				if (w) {
-					if (l_obreczy == 6) {
+					if (l_obreczy >= 6) {
 						kula->ruch(0, 0);
 						kula->grawitacja(0, 0);
 						std::cout << "Gratulacje, przeszedles gre." << std::endl;
@@ -162,74 +162,47 @@ void cScena::timer()
 	}
 	// wykrywanie podloza pod kula
 	if (kula->get_g() == 0 && kula->get_y() != znajdz_podloge()) { // sprawdzenie kiedy kula nie ma przyspieszenia i nie jest na najnizszym mozliwym podlozu
-		kula->grawitacja(8.81*1E-6, -90); // upadek na podloze
+		kula->grawitacja(7.81*1E-6, -90); // upadek na podloze
 	}
 	kula->aktualizuj(GetTickCount());
     glutPostRedisplay();
     glutTimerFunc(40, timer_binding, 0);
 }
 
-void cScena::key(unsigned char key, int x, int y) { // sterowanie
+void cScena::key(unsigned char key, int x, int y) // sterowanie
+{
 	switch (key) {
 	case 'w': // skok
 	{
 		if (kula->get_g() == 0) { // zablokowanie wielokrotnego skoku
-			kula->ruch(0.009, 90); // predkosc do ustawienia!
+			kula->ruch(0.009, 90);
 		}
 		break;
 	}
 	case 'a': // ruch w lewo
 	{
 		if (kula->get_g() == 0) { // ruch na podloze
-			kula->ruch(0.002, 180); // predkosc do ustawienia!
+			kula->ruch(0.002, 180);
 		}
 		else { // ruch w trakcie skoku
-			kula->ruch(0.004, 180); // predkosc do ustawienia!
+			kula->ruch(0.004, 180);
 		}
 		break;
 	}
 	case 'd': // ruch w prawo
 	{
 		if (kula->get_g() == 0) { // ruch na podlodze
-			kula->ruch(0.002, 0); // predkosc do ustawienia!
+			kula->ruch(0.002, 0);
 		}
 		else { // ruch w trakcie skoku
-			kula->ruch(0.004, 0); // predkosc do ustawienia!
+			kula->ruch(0.004, 0);
 		}
 		break;
 	}
-	case 's': // awaryjne przywrocenie kuli do poziomu podlogi
+	case 's': // zatrzymanie kuli
 	{
-		kula->set_y(znajdz_podloge());
 		kula->ruch(0, 0);
 		kula->grawitacja(0, 0);
-		break;
-	}
-	case 'r': // zresetowanie rozgrywki
-	{
-		kula = new cKula(2.5, 2.5, 0.5, 3);
-		checkpoint.first = 2.5;
-		checkpoint.second = 2.5;
-		l_obreczy = 0;
-		wczytaj_plansze("plansza.txt");
-		// przywrocenie zaliczonych obreczy i punktow kontrolnych do stanu bazowego
-		for (std::vector<std::vector<cFigura*>>::iterator itr1 = plansza.begin(); itr1 != plansza.end(); itr1++) {
-			std::vector<cFigura*> kolumna = *itr1;
-			for (std::vector<cFigura*>::iterator itr2 = kolumna.begin(); itr2 != kolumna.end(); itr2++) {
-				cFigura* tmp = *itr2;
-				if (tmp == 0) {
-					continue;
-				}
-				cCheckpoint* c = dynamic_cast<cCheckpoint*>(tmp);
-				if (c) {
-					c->set_aktywnosc(0);
-				}
-				cObrecz* o = dynamic_cast<cObrecz*>(tmp);
-				if (o) {
-					o->set_aktywnosc(1);
-				}
-			}
-		}
 		break;
 	}
 	case 'b': // powrot do punktu kontrolnego
@@ -296,7 +269,8 @@ void cScena::wczytaj_plansze(std::string nazwa) // wczytywanie planszy z pliku .
 	plik.close();
 }
  
-double cScena::znajdz_podloge() { // metoda wywolywana klawiszem 's' - przywrocenie kuli fo poziomu podlogi
+double cScena::znajdz_podloge() // przywrocenie kuli fo poziomu podlogi
+{
 	double xk = kula->get_x(); // wspolrzedna x kuli
 	for (std::vector<std::vector<cFigura*>>::iterator itr1 = plansza.begin(); itr1 != plansza.end(); itr1++) { // znalezienie kolumny odpowiadajacej wspolrzednej x kuli
 		std::vector<cFigura*> kolumna = (*itr1);
@@ -337,6 +311,19 @@ double cScena::znajdz_podloge() { // metoda wywolywana klawiszem 's' - przywroce
 	}
 }
 
-cScena::~cScena() {
- 
+void cScena::zasady() // opis gry
+{
+	std::cout << "Witaj w grze Bonuce!" << std::endl;
+	std::cout << "Zasady:" << std::endl;
+	std::cout << "Poruszaj kula zaliczajac obrecze i unikaj przeszkod. Mozesz zdobyc dodatkowe punkty zycia i osiagnac punkty kontrolne." << std::endl;
+	std::cout << "Sterowanie:" << std::endl;
+	std::cout << "W - skok" << std::endl << "A - ruch w lewo" << std::endl << "D - ruch w prawo" << std::endl << "S - zatrzymanie"
+		<< std::endl << "B - powrot do punktu kontrolnego" << std::endl;
+	std::cout << "Ponizej beda wyswietlaly sie komunikaty zwiazane z twoimi aktywnosciami." << std::endl;
+
+}
+
+cScena::~cScena() 
+{
+
 }

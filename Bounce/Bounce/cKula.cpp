@@ -12,16 +12,16 @@ void cKula::rysuj()
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
 	if (hp_ == 4) {
-		glColor3d(1, 0, 0); // kolor do ustawienia!
+		glColor3d(1, 0, 0);
 	}
 	else if (hp_ == 3) {
-		glColor3d(0.8, 0, 0); // kolor do ustawienia!
+		glColor3d(0.8, 0, 0);
 	}
 	else if (hp_ == 2) {
-		glColor3d(0.6, 0, 0); // kolor do ustawienia!
+		glColor3d(0.6, 0, 0);
 	}
 	else if (hp_ == 1) {
-		glColor3d(0.4, 0, 0); // kolor do ustawienia!
+		glColor3d(0.4, 0, 0);
 	}
  	glBegin(GL_POLYGON);
 	{
@@ -39,7 +39,7 @@ void cKula::rysuj()
 void cKula::ruch(double dv, double dalfa_v) { 
 	if (dalfa_v == 90) {
 		this->predkosc(dv, dalfa_v);
-		this->grawitacja(8.81*1E-6, -90); // grawitacja do ustawienia!
+		this->grawitacja(7.81*1E-6, -90);
 	}
 	else {
 		this->predkosc(dv, dalfa_v);

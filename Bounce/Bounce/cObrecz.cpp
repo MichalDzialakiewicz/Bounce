@@ -12,10 +12,10 @@ void cObrecz::rysuj()
 	glRotated(0, 0, 1, 0);
 	glRotated(0, 0, 0, 1);
 	if (aktywnosc_ == 1) { // obrecz niezaliczona
-		glColor3d(1, 1, 0); // kolor do ustawienia!
+		glColor3d(1, 1, 0);
 	}
 	else { // obrecz zaliczona
-		glColor3d(0.4, 0.4, 0.4); // kolor do ustawienia!
+		glColor3d(0.4, 0.4, 0.4);
 	}
 	glBegin(GL_POLYGON);
 	{
